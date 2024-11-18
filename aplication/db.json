@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Yuri",
+      "email": "yurigink@mail.com",
+      "senha": "123456"
+    },
+    {
+      "id": "2",
+      "name": "Yuri2",
+      "email": "yurigildesouza@mail.com",
+      "senha": "654321"
+    },
+    {
+      "id": "4319",
+      "nome": "yuri ",
+      "email": "yurigink@gmail.com",
+      "idade": 28,
+      "userName": "yurigil",
+      "phNumber": "21980044800",
+      "password": "17101997"
+    }
+  ]
+}
