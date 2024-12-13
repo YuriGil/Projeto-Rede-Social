@@ -1,38 +1,77 @@
-import { useNavigate } from "react-router-dom"
-import { Header } from "../../components/Header"
-import bannerImage from '../../assets/github-mark.svg'
-import { Button  } from "../../components/Button";
-import { Container, TextContent, Title, TitleHighLight } from './styles'
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import capivaraLogo from "../../assets/capivaraLogo.png";
+import { Button } from "../../components/Button";
+import {
+  Container,
+  Content,
+  TextContent,
+  Title,
+  TitleHighLight,
+  BannerImage,
+  ButtonGroup,
+  LoginSocial, 
+  Logo,
+  HeadContainer
+} from "./styles";
 
-const Home = () => {
+const Home: React.FC = () => {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const handleClickSignIn = () => {
+    navigate("/login");
+  };
 
-    const handleClickSignIn = () => {
-        navigate('/login')
-    }
+  return (
+    <>
+      <Container>
+        <Content>
+          <HeadContainer>
+          <Logo src={capivaraLogo} alt="site logo" onClick={() => navigate("/")} />
+          <Title>
+            <TitleHighLight>
+              Application
+              <br />
+            </TitleHighLight>
+            BETA
+          </Title>
+          </HeadContainer>
+          <TextContent>
+            Conecte-se e compartilhe com as pessoas que fazem parte da sua vida
+          </TextContent>
 
-    return (<>
-        <Header autenticado={true}/>
-        <Container>
-            <div>
-                <Title>
-                    <TitleHighLight>
-                    Implemente <br />
-                    </TitleHighLight>
-                    o seu futuro agora!
-                </Title>
-                <TextContent>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate perspiciatis minus doloremque officia fugiat, 
-                    aliquid repellat a accusantium eum nisi exercitationem, dolorem vero. Ab repudiandae est accusamus tempore quidem doloribus.
-                </TextContent>
-                <Button title="Começar Agora" variant="secondery" onClick={handleClickSignIn}/>
-            </div>
-            <div>
-                <img src={bannerImage} alt="Image princiapal" />
-            </div>
-        </Container>
-    </>)
-}
+          <ButtonGroup> 
+          <LoginSocial>
+          <span 
+          className="material-symbols-outlined"
+          onClick={() => navigate("/form")}
+          >public
+            </span>
 
-export { Home }
+              Inscreva-se com Qualquer Rede Social
+              
+          </LoginSocial>
+
+          <a>OU</a>
+
+            <Button 
+            title="CADASTRE-SE" 
+            onClick={() => navigate("/form")} 
+            />
+            <hr />
+            <Button
+              title="ENTRAR"
+              variant="secondery"
+              onClick={handleClickSignIn}
+            />
+            
+           
+          </ButtonGroup>
+        </Content>
+        <BannerImage img={capivaraLogo} />
+      </Container>
+    </>
+  );
+};
+
+export { Home };

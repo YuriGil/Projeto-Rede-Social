@@ -1,23 +1,20 @@
 import styled from "styled-components";
 
-export const ButtonContainer = styled.button`
+export const MenuButtonContainer = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px; 
-  padding: 12px 20px;
-  width: 200px; 
+  padding: 8px;
   border: none;
   border-radius: 4px;
-  background-color: #41354e;
-  color: #fff0ff;
+  background-color: transparent;
+  color: #fff;
   cursor: pointer;
-  position: relative; 
 
   &:hover {
-    background-color: #cbbcd2;
-    color: #41354e;
+    background-color: #4a00c8;
   }
+
   &:disabled {
     background-color: #ccc;
     cursor: not-allowed;
@@ -28,7 +25,10 @@ export const ButtonContainer = styled.button`
     align-items: center;
   }
 
-  @media (min-width: 768px) {
-    /* Tamanhos para telas maiores, caso necessário */
+  
+  svg {
+    font-size: 20px;
+    color:#000;
+    margin-right: 8px; /* Espaço entre a lupa e o texto */
   }
 `;

@@ -1,14 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import { GlobalStyle } from './styles/global';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { GlobalStyle } from "./styles/global";
+import { AuthProvider } from "./components/AuthContext";
 
 const root = ReactDOM.createRoot(
-  //forçação de tipagem
-  document.getElementById('root') as Element | DocumentFragment);
+  document.getElementById("root") as Element | DocumentFragment
+);
+
 root.render(
   <React.StrictMode>
-    <GlobalStyle />
-    <App />
+    <AuthProvider>
+      <GlobalStyle />
+      <App />
+    </AuthProvider>
   </React.StrictMode>
 );

@@ -1,12 +1,14 @@
-import React from 'react'
+import React from "react";
+import { ButtonContainer } from "./styles";
+import { IButton } from "./types";
 
-import { ButtonContainer } from "./styles"
-
-import { IButton } from './types';
-
-const Button = ({title, variant="primary", onClick} : IButton) => {
+const Button: React.FC<IButton> = ({ title, onClick, disabled, iconLeft }) => {
   return (
-<ButtonContainer variant={variant} onClick={onClick}>{title}</ButtonContainer>
-  )
-}
+    <ButtonContainer onClick={onClick} disabled={disabled}>
+      {title}
+      {iconLeft && <span>{iconLeft}</span>} {/* Renderiza o ícone à direita */}
+    </ButtonContainer>
+  );
+};
+
 export { Button };
