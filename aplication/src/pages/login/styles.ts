@@ -114,12 +114,13 @@ export const Right = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
+  
 
   @media (min-width: 768px) {
     margin-top: 5rem;
     align-items: flex-start;
     padding: 1rem;
+    width:50%;
   }
 `;
 
@@ -213,9 +214,10 @@ export const Divider2 = styled.div`
 
 
 export const Logo = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
   cursor: pointer;
+  margin-right: 1rem;
   margin-bottom: 1rem;
   transition: transform 0.2s ease-in-out;
 
@@ -226,8 +228,6 @@ export const Logo = styled.img`
   @media (min-width: 768px) {
     width: 4rem;
     height: 4rem;
-    margin-bottom: 0;
-    margin-right: 1rem;
   }
 `;
 
@@ -236,11 +236,5 @@ export const HeadContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  margin-bottom: 2rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-  }
+  flex-direction: row;
 `;

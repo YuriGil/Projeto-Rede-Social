@@ -27,6 +27,7 @@ export const Title = styled.h2`
   margin-bottom: 20px;
   line-height: 44px;
   color: #000;
+  padding: 0 1rem 0 1rem ;
 
   @media (min-width: 768px) {
     font-size: 28px;
@@ -82,8 +83,8 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width:100%;
-  padding: 1rem;
+  width:90%;
+  padding: 1rem 0 1rem 0;
   margin: 1rem;
   border: 2px solid #ccc;
   border-radius: 8px;
@@ -153,11 +154,12 @@ export const LoginSocial = styled.span`
 }
 `
 export const Logo = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   cursor: pointer;
   padding-right:1rem;
   transition: transform 0.2s ease-in-out;
+  margin-left:1rem;
 
   &:hover {
     transform: scale(1.25); 
@@ -166,6 +168,7 @@ export const Logo = styled.img`
   @media (min-width: 768px) {
     width: 4rem;
     height: 4rem;  
+    margin:0;
   }
 `;
 
@@ -174,10 +177,9 @@ export const HeadContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-bottom: 2rem;
+  flex-direction: row;
 
   @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
+    
   }
 `;

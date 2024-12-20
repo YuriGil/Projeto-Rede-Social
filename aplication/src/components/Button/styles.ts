@@ -27,8 +27,4 @@ export const ButtonContainer = styled.button`
     display: flex;
     align-items: center;
   }
-
-  @media (min-width: 768px) {
-    /* Tamanhos para telas maiores, caso necessário */
-  }
 `;

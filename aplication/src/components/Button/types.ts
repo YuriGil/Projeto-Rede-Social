@@ -6,6 +6,7 @@ export interface IButton {
      type?:string;
      disabled?: boolean;
     iconLeft?: ReactNode;
+    style?: any;
 }
 export interface IButtonStyled {
     variant: string;

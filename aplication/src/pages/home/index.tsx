@@ -43,6 +43,7 @@ const Home: React.FC = () => {
           <ButtonGroup> 
           <LoginSocial>
           <span 
+          /*Remover*/
           className="material-symbols-outlined"
           onClick={() => navigate("/form")}
           >public

@@ -17,10 +17,10 @@ import {
   BannerImage,
   Divider,
   FormWrapper,
-  ButtonGroup,
   Left, 
   Right, 
-  Logo
+  Logo,
+  HeadContainer
 } from "./styles";
 import capivaraLogo from "../../assets/capivaraLogo.png";
 import { FormData } from "./types";
@@ -80,7 +80,8 @@ const Form = () => {
   return (
     <Container>
       <Content>
-        <Left>        
+        <Left>
+              <HeadContainer>
         <Logo src={capivaraLogo} alt="site logo" onClick={() => navigate("/")} />
         <Title>
           <TitleHighLight>
@@ -89,6 +90,10 @@ const Form = () => {
           </TitleHighLight>
           BETA
         </Title>
+            <Divider />
+                </HeadContainer>     
+            <TextContent>Ja tem uma conta? Faça o Login</TextContent>
+            <Button title="Login" onClick={() => navigate("/login")} />
        </Left> 
        <Right>
        <FormWrapper>
@@ -166,10 +171,6 @@ const Form = () => {
 
             <Button title="Cadastrar" type="submit" />
           </form>
-          <ButtonGroup>
-            <Divider />
-            <Button title="Voltar para Login" onClick={() => navigate("/login")} />
-          </ButtonGroup>
         </FormWrapper>
         </Right>
       </Content>

@@ -13,6 +13,10 @@ export const Container = styled.main`
   align-items: center;
   position: relative;
   overflow: hidden;
+
+  Button {
+    width:100%;
+  }
 `;
 
 export const Content = styled.div`
@@ -20,13 +24,13 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 1rem;
   margin: 1rem;
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.1);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-
+  
   @media (min-width: 768px) {
+    padding: 1rem;
     flex-direction: row;
     justify-content: space-between;
     width: 60%;
@@ -36,28 +40,35 @@ export const Content = styled.div`
 
 export const Left = styled.div`
   flex: 1;
+  order:2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
-
+  padding-bottom:1rem;
+  
   @media (min-width: 768px) {
-    align-items: flex-start;
+  order:0;
+    width: 50%;
     padding: 2rem;
+    max-width:700px;
+  }
+  Button{
+  width:80%;
   }
 `;
 
 export const Right = styled.div`
   flex1:1;
+  order:1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
-
+  
   @media (min-width: 768px) {
-    margin-top: 5rem;
-    align-items: flex-start;
     padding: 1rem;
+    width: 50%;
+    order:0;
+    
   }
 `;
 
@@ -66,6 +77,9 @@ export const Title = styled.h2`
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 1rem;
+  text-align: center;
+  align-self: center;
+  margin-top: 2rem;
 `;
 
 export const TitleHighLight = styled.span`
@@ -73,18 +87,17 @@ export const TitleHighLight = styled.span`
 `;
 
 export const TextContent = styled.p`
-  font-size: 18px;
+  font-size: 22px;
   margin-bottom: 1rem;
   color: #666;
   text-align: center;
 `;
 
 export const FormWrapper = styled.div`
-  width: 100%;
   padding: 1rem;
 
   @media (min-width: 768px) {
-    width: 80%;
+   
   }
 `;
 
@@ -143,9 +156,12 @@ export const Divider = styled.div`
 `;
 
 export const Logo = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3.5rem;
+  max-width: 300px;
+  height: 3.5rem;
   cursor: pointer;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
   transition: transform 0.2s ease-in-out;
 
   &:hover {
@@ -153,7 +169,18 @@ export const Logo = styled.img`
   }
 
   @media (min-width: 768px) {
-    width: 4rem;
-    height: 4rem;  
+   width: 90%;
+   height: 80%;
+   opacity:0.5;
+  }
+`;
+export const HeadContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+
+   @media (min-width: 768px) {
+      flex-direction:column;
   }
 `;

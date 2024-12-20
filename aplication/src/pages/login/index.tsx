@@ -72,11 +72,6 @@ const Login = () => {
     BETA
   </Title>
 </HeadContainer>
-<TextContent>
-  Conecte-se e compartilhe com as pessoas que fazem parte da sua vida
-</TextContent>
-
-
         <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="email">E-mail:</label>
         <InputWrapper>

@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
             | <a title="Sobre" onClick={() => navigate("#")}  >SOBRE</a> 
             |
           </Options>
-          &copy; 2024 - Aplicativo Beta
+          <span>&copy; 2024 - Aplicativo Beta</span>
         </InfoContainer>
       </Content>
     </Container>
