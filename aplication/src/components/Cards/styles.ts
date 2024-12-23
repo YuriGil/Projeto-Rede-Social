@@ -1,92 +1,50 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-export const CardContainer = styled.div`
-    width:100%;
-    background-color: #3b4651;
-    position:relative;
-    margin-bottom:24px;
-`
+export const PostCardContainer = styled.div`
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 16px;
 
-export const ImageBackground = styled.img`
-    width:100%;
-    height:180px;
-`
+  &:hover {
+    transform: scale(1.01);
+    transition: transform 0.2s ease-in-out;
+  }
+`;
+
+export const Header = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #41354e;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin-right: 8px;
+  }
+
+  span {
+    font-weight: bold;
+    color: #41354e;
+  }
+
+  small {
+    color: #888;
+  }
+`;
+
 export const Content = styled.div`
-    width: 100%;
-    display:flex;
-    flex-directionnnn: column;
-    padding:12px;
-`
-export const UserInfo = styled.div`
-    display:flex;
-    flex-direction:row;
-    margin-bottom:12px;
-    
-    div{
-        margin-left:12px;
-    }
+  p {
+    margin: 0;
+    color: #666;
+  }
+`;
 
-    h4{
-        font-family:'Open sans';
-        font-style:'normal;
-        font-weight:900;
-        font-size:18px;
-        line-height:25px;
-        color:#fff;
-    }
-
-    p{
-        font-family:'Open sans';
-        font-style:'normal;
-        font-weight:400;
-        font-size:12px;
-        line-height:16px;
-        color:#fff;
-    }
-`
-export const UserPicture = styled.img`
-    width:32px;
-    height:32px;
-    border-radius:22px;
-    border:3px solid #fff;
-`
-export const PostInfo = styled.div`
-    margin-bottom:12px;
-
-      h4{
-        font-family:'Open sans';
-        font-style:'normal;
-        font-weight:900;
-        font-size:18px;
-        line-height:25px;
-        color:#fff;
-    }
-
-    p{
-        font-family:'Open sans';
-        font-style:'normal;
-        font-weight:400;
-        font-size:12px;
-        line-height:16px;
-    }
-`
-export const HasInfo = styled.div`
-    margin-bottom:12px;
-
-      h4{
-        font-family:'Open sans';
-        font-style:'normal;
-        font-weight:900;
-        font-size:18px;
-        line-height:25px;
-        color:#fff;
-    }
-
-    p{
-        font-family:'Open sans';
-        font-style:'normal;
-        font-weight:400;
-        font-size:12px;
-        line-height:16px;
-    }
-`

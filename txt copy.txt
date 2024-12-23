@@ -1,0 +1,359 @@
+levando em condireração a pagina feed e os componentes pertecentes a ela (SideBar, Stories, PostInput, Cards, Advertisement, Anniversari), faça com que tudo tenha o mesmo estilo e funcionalidade das paginas no arquivo
+
+--feed/index.tsx--
+
+import React, {useContext} from "react";
+import Sidebar from "../../components/SideBar";
+import Stories from "../../components/Stories";
+import PostInput from "../../components/PostInput";
+import Options from "../../components/Options";
+import PostCard from "../../components/Cards";
+import Advertisement from "../../components/Advertisement";
+//import Anniversaries from "../../components/Anniversaries";
+import { useNavigate } from "react-router-dom";
+import { Container, MainContent, SidebarRight } from "./styles";
+import { AuthContext } from "../../components/AuthContext";
+
+const Feed = () => {
+  const { autenticado, loading } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  if (loading) {
+    return <p>Carregando...</p>; // Indicador de carregamento
+  }
+
+  if (!autenticado) {
+    navigate("/login");
+    return null;
+  }
+
+  return (
+    <Container>
+      <Sidebar />
+    <MainContent>
+      <Stories />
+      <PostInput />
+      <Options />
+      <PostCard />
+      <PostCard />
+    </MainContent>
+    <SidebarRight>
+      <Advertisement />
+      <Advertisement />
+    </SidebarRight>
+    </Container>
+  );
+};
+
+export { Feed };
+
+
+
+--feed/styles.ts--
+
+import styled from "styled-components";
+
+export const Container = styled.div`
+  display: flex;
+  width: 100%;
+  background-color: #f7f7f7;
+`;
+
+export const MainContent = styled.div`
+  flex: 1;
+  padding: 16px;
+`;
+
+export const SidebarRight = styled.div`
+  width: 20%;
+  padding: 16px;
+`;
+
+--Advertisement/index.tsx--
+
+import React from "react";
+import { AdContainer } from "./styles";
+
+const Advertisement = () => (
+  <AdContainer>
+    <p>Publicidade</p>
+  </AdContainer>
+);
+
+export default Advertisement;
+
+--Advertisement/styles.ts--
+import styled from "styled-components";
+
+export const AdContainer = styled.div`
+  background-color: #ffecb3;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 16px;
+`;
+
+--Anniversaries/index.tsx--
+
+import React from "react";
+import { AnniversariesContainer } from "./styles";
+
+const Anniversaries = () => (
+  <AnniversariesContainer>
+    <h3>Aniversários</h3>
+    <p>Fulano faz aniversário hoje!</p>
+  </AnniversariesContainer>
+);
+
+export default Anniversaries;
+
+--Anniversaries/styles.ts--
+
+import styled from "styled-components";
+
+export const AnniversariesContainer = styled.div`
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+`;
+
+--Cards/index.tsx--
+
+import React from "react";
+import { PostCardContainer, Header, Content } from "./styles";
+
+const PostCard = () => (
+  <PostCardContainer>
+    <Header>
+      <div className="avatar">FT</div>
+      <div>
+        <span>Nome de Usuário</span>
+        <small>2h atrás</small>
+      </div>
+    </Header>
+    <Content>
+      <p>Este é o conteúdo de um post.</p>
+    </Content>
+  </PostCardContainer>
+);
+
+export default PostCard;
+
+--Cards/styles.ts--
+
+import styled from "styled-components";
+
+export const PostCardContainer = styled.div`
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+`;
+
+export const Header = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  span {
+    font-weight: bold;
+  }
+
+  small {
+    color: #888;
+  }
+`;
+
+export const Content = styled.div`
+  p {
+    margin: 0;
+  }
+`;
+
+--Options/index.tsx--
+
+import React from "react";
+import { OptionsContainer, Option } from "./styles";
+
+const Options = () => (
+  <OptionsContainer>
+    <Option>Opção 1</Option>
+    <Option>Opção 2</Option>
+    <Option>Opção 3</Option>
+  </OptionsContainer>
+);
+
+export default Options;
+
+--Options/styles.ts--
+
+import styled from "styled-components";
+
+export const OptionsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 16px 0;
+`;
+
+export const Option = styled.div`
+  padding: 8px 16px;
+  background-color: #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ccc;
+  }
+`;
+
+--SideBar/index.tsx--
+
+import React from "react";
+import { PostInputContainer } from "./styles";
+
+const PostInput = () => (
+  <PostInputContainer>
+    <input type="text" placeholder="Postar alguma coisa..." />
+    <button>Enviar</button>
+  </PostInputContainer>
+);
+
+export default PostInput;
+
+--SideBar/styles.ts--
+
+import styled from "styled-components";
+
+export const SidebarContainer = styled.div`
+  width: 20%;
+  background-color: #3b4651;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Profile = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+
+  div {
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  span {
+    color: #fff;
+    font-size: 14px;
+  }
+`;
+
+export const MenuItem = styled.div`
+  margin: 8px 0;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+--PostInput/index.tsx--
+
+import React from "react";
+import { PostInputContainer } from "./styles";
+
+const PostInput = () => (
+  <PostInputContainer>
+    <input type="text" placeholder="Postar alguma coisa..." />
+    <button>Enviar</button>
+  </PostInputContainer>
+);
+
+export default PostInput;
+
+--PostInput/styles.ts--
+
+import styled from "styled-components";
+
+export const PostInputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  button {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #45a049;
+    }
+  }
+`;
+
+--Stories/index.tsx--
+
+import React from "react";
+import { StoriesContainer, StoryBox } from "./styles";
+
+const Stories = () => (
+  <StoriesContainer>
+    {Array(5)
+      .fill(0)
+      .map((_, index) => (
+        <StoryBox key={index}>STORY</StoryBox>
+      ))}
+  </StoriesContainer>
+);
+
+export default Stories;
+
+--Stories/styles.ts--
+
+import styled from "styled-components";
+
+export const StoriesContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 16px 0;
+`;
+
+export const StoryBox = styled.div`
+  width: 100px;
+  height: 150px;
+  background-color: #f41050;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+`;

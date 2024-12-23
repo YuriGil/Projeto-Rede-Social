@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { IColumn } from "../../pages/feed/types";
 
 export const Container = styled.main`
   width: 100%;
@@ -9,77 +8,77 @@ export const Container = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f7f7f7;
   position: relative;
-`;
-
-export const HeadContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 1rem;
-`;
-
-export const Logo = styled.img`
-  width: 3rem;
-  height: 3rem;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
-
-  &:hover {
-    transform: scale(1.25); 
-  }
-
-  @media (min-width: 768px) {
-    width: 4rem;
-    height: 4rem;  
-  }
-`;
-
-export const Title = styled.h3`
-  font-family: 'Monospace, Courier New';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 32px;
-  color: #41354e;
-  margin-left: 1rem;
-`;
-
-export const TitleHighLight = styled.span`
-  color: #f41050;
+  overflow: hidden;
 `;
 
 export const Content = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 80%;
-  margin-top: 2rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    width: 95%;
-  }
-`;
-
-export const Column = styled.div<IColumn>`
-  flex: ${({ flex }) => flex};
-  padding-right: 24px;
-
-  @media (max-width: 768px) {
-    padding-right: 0;
-    margin-bottom: 2rem;
-  }
-`;
-
-export const Footer = styled.footer`
   width: 100%;
+  height: 100%;
+  justify-content: space-between;
   padding: 1rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.1);
+
+  @media (min-width: 768px) {
+    padding: 2rem;
+  }
+`;
+
+export const MainContent = styled.div`
+  flex: 1;
+  margin: 0 1rem;
+`;
+
+export const SidebarRight = styled.div`
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0 1rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+export const BannerImage = styled.div<{ img: string }>`
+  position: absolute;
+  bottom: 0;
+  background-image: url(${(props) => props.img});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 50rem;
+  height: 50rem;
+  opacity: 0.05;
+  pointer-events: none;
+
+  @media (min-width: 768px) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+`;
+
+export const Title = styled.h2`
+  font-family: 'Monospace, Courier New';
+  font-size: 32px;
   text-align: center;
-  background-color: #41354e;
-  color: #fff;
-  font-size: 14px;
+  margin-bottom: 2rem;
+  color: #41354e;
+`;
+
+export const TitleHighLight = styled.span`
+  font-weight: bold;
+`;
+
+export const Divider = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  margin: 1rem 0;
+  opacity: 0.5;
 `;

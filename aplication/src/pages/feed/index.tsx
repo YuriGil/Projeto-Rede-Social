@@ -1,9 +1,24 @@
+
 import React, { useContext } from "react";
+import Sidebar from "../../components/SideBar";
+import Stories from "../../components/Stories";
+import PostInput from "../../components/PostInput";
+import Options from "../../components/Options";
+import PostCard from "../../components/Cards";
+import Advertisement from "../../components/Advertisement";
 import { useNavigate } from "react-router-dom";
-import { Card } from "../../components/Cards";
-import { UserInfo } from "../../components/UserInfo";
+import {
+  Container,
+  Content,
+  SidebarRight,
+  MainContent,
+  BannerImage,
+  Title,
+  TitleHighLight,
+  Divider
+} from "./styles";
 import { AuthContext } from "../../components/AuthContext";
-import { Container, Column, TitleHighLight, Content } from "./styles";
+import capivaraLogo from "../../assets/capivaraLogo.png";
 
 const Feed = () => {
   const { autenticado, loading } = useContext(AuthContext);
@@ -21,22 +36,24 @@ const Feed = () => {
   return (
     <Container>
       <Content>
-        <Column flex={3}>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </Column>
-        <Column flex={1}>
-          <TitleHighLight># TOP QUALQUER COISA</TitleHighLight>
-          <UserInfo percentual={89} nome="Yuri Gil" image="../../assets/github-mark.svg" />
-          <UserInfo percentual={80} nome="João Silva" image="../../assets/github-mark.svg" />
-          <UserInfo percentual={70} nome="Maria Clara" image="../../assets/github-mark.svg" />
-        </Column>
+        <Sidebar />
+        <MainContent>
+          <Title>
+            <TitleHighLight>Feed</TitleHighLight>
+          </Title>
+          <Stories />
+          <PostInput />
+          <Options />
+          <PostCard />
+          <PostCard />
+        </MainContent>
+        <SidebarRight>
+          <Advertisement />
+          <Advertisement />
+        </SidebarRight>
       </Content>
+      <BannerImage img={capivaraLogo} />
     </Container>
   );
 };
-
 export { Feed };

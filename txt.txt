@@ -1,269 +1,141 @@
-Faça com que a pagina Feed tenha o mesmo estilo e funcionalidade das outras paginas:
+--recovery/index.tsx--
 
---Feed/index.tsx--
+import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
+import { MdEmail } from "react-icons/md";
+import { api } from "../../services/api";
+import { Input } from "../../components/Input";
+import { Button } from "../../components/Button";
+import capivaraLogo from "../../assets/capivaraLogo.png";
+import {
+  Container,
+  Content,
+  Title,
+  TitleHighLight,
+  TextContent,
+  InputWrapper,
+  BannerImage,
+  ButtonGroup,
+  Logo,
+  HeadContainer,
+  Divider
+} from "./styles";
+// Validação do formulário
+const schema = yup.object({
+  email: yup.string().email("E-mail inválido").required("Campo obrigatório"),
+});
 
-//import { Button } from "../../components/Button";
-import { Card } from "../../components/Cards";
-import { UserInfo } from "../../components/UserInfo";
+const Recovery: React.FC = () => {
+  const navigate = useNavigate();
+  const { control, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-import { Container, Column, Title, TitleHighLight, Content } from "./styles";
+  const onSubmit: SubmitHandler<{ email: string }> = async (data) => {
+    try {
+      const response = await api.get(`/users?email=${data.email}`);
+      if (response.data.length > 0) {
+        const userId = response.data[0].id;
+        await api.post("/send-recovery-email", { email: data.email, userId });
 
-const Feed = () => {
+        alert("Um link para redefinição de senha foi enviado ao seu e-mail.");
+        navigate("/login");
+      } else {
+        alert("E-mail não encontrado. Verifique se o e-mail está correto.");
+      }
+    } catch (error) {
+      console.error("Erro ao processar solicitação:", error);
+      alert("Erro ao processar sua solicitação. Tente novamente mais tarde.");
+    }
+  };
+
   return (
     <Container>
       <Content>
-        <Column flex={3}>
-          <Title>Feed</Title>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </Column>
-        <Column flex={1}>
-          <TitleHighLight># TOP QUALQUER COISA</TitleHighLight>
-          <UserInfo percentual={89} nome="Yuri Gil" image="../../assets/github-mark.svg" />
-          <UserInfo percentual={89} nome="Yuri Gil" image="../../assets/github-mark.svg" />
-          <UserInfo percentual={89} nome="Yuri Gil" image="../../assets/github-mark.svg" />
-          <UserInfo percentual={89} nome="Yuri Gil" image="../../assets/github-mark.svg" />
-          <UserInfo percentual={89} nome="Yuri Gil" image="../../assets/github-mark.svg" />
-        </Column>
+        <HeadContainer>
+          <Logo src={capivaraLogo} alt="site logo" onClick={() => navigate("/")} />
+          <Title>
+            <TitleHighLight>
+              Recuperação
+              <br />
+            </TitleHighLight>
+            de Senha
+          </Title>
+        </HeadContainer>
+        <TextContent>
+          Insira seu e-mail para receber instruções de redefinição de senha.
+        </TextContent>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <InputWrapper>
+            <MdEmail />
+            <Input
+              id="email"
+              name="email"
+              placeholder="Digite seu e-mail"
+              control={control}
+              errorMessage={errors.email?.message}
+            />
+          </InputWrapper>
+          <ButtonGroup>
+            <Button 
+            style={{width:"100%"}}
+            title="Enviar" 
+            type="submit" />
+            <Divider/>
+            <Button
+              title="Voltar ao Login"
+              variant="secondery"
+              onClick={() => navigate("/login")}
+            />
+          </ButtonGroup>
+        </form>
       </Content>
+      <BannerImage img={capivaraLogo} />
     </Container>
   );
 };
 
-export { Feed };
+export { Recovery };
 
-// feed/styles.ts
+--recovery/styles.ts--
+
 import styled from "styled-components";
-import { IColumn } from "../../pages/feed/types";
+import { BannerImage as SharedBannerImage } from "../home/styles";
 
 export const Container = styled.main`
   width: 100%;
-  height: 100vh;
+  height: 85vh;
   margin: 0 auto;
   font-family: 'Monospace, Courier New';
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  background-color: #f7f7f7;
-`;
-
-export const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 80%;
-  margin-top: 2rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    width: 95%;
-  }
-`;
-
-export const Title = styled.h3`
-  font-family: 'Monospace, Courier New';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 32px;
-  color: #41354e;
-  margin-bottom: 24px;
-`;
-
-export const TitleHighLight = styled.h3`
-  font-family: 'Monospace, Courier New';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 32px;
-  color: #f41050;
-  margin-bottom: 16px;
-`;
-
-export const Column = styled.div<IColumn>`
-  flex: ${({ flex }) => flex};
-  padding-right: 24px;
-
-  @media (max-width: 768px) {
-    padding-right: 0;
-    margin-bottom: 2rem;
-  }
-`;
-
---home/index.tsx--
-
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import capivaraLogo from "../../assets/capivaraLogo.png";
-import { Button } from "../../components/Button";
-import {
-  Container,
-  Content,
-  TextContent,
-  Title,
-  TitleHighLight,
-  BannerImage,
-  ButtonGroup,
-  LoginSocial, 
-  Logo,
-  HeadContainer
-} from "./styles";
-
-const Home: React.FC = () => {
-  const navigate = useNavigate();
-
-  const handleClickSignIn = () => {
-    navigate("/login");
-  };
-
-  return (
-    <>
-      <Container>
-        <Content>
-          <HeadContainer>
-          <Logo src={capivaraLogo} alt="site logo" onClick={() => navigate("/")} />
-          <Title>
-            <TitleHighLight>
-              Application
-              <br />
-            </TitleHighLight>
-            BETA
-          </Title>
-          </HeadContainer>
-          <TextContent>
-            Conecte-se e compartilhe com as pessoas que fazem parte da sua vida
-          </TextContent>
-
-          <ButtonGroup> 
-          <LoginSocial>
-          <span 
-          className="material-symbols-outlined"
-          onClick={() => navigate("/form")}
-          >public
-            </span>
-
-              Inscreva-se com Qualquer Rede Social
-              
-          </LoginSocial>
-
-          <a>OU</a>
-
-            <Button 
-            title="CADASTRE-SE" 
-            onClick={() => navigate("/form")} 
-            />
-            <hr />
-            <Button
-              title="ENTRAR"
-              variant="secondery"
-              onClick={handleClickSignIn}
-            />
-            
-           
-          </ButtonGroup>
-        </Content>
-        <BannerImage img={capivaraLogo} />
-      </Container>
-    </>
-  );
-};
-
-export { Home };
-
---home/styles.ts--
-
-import styled from "styled-components";
-
-export const Container = styled.main`
-  width: 100%;
-  height: 80vh;
-  margin: 0 auto;
-  font-family: 'Monospace, Courier New';
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   position: relative;
   overflow: hidden;
 
-  @media (min-width: 768px) {
-    flex-direction: row;
-    justify-content: space-between;
+  form{
+    width:100%;
+
+    input{
+      width:90%;
+    }
+    button{
+      align-self:center;
+    }
   }
-`;
 
-export const Title = styled.h2`
-  font-family: 'Monospace, Courier New';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 32px;
-  width: 320px;
-  margin-bottom: 20px;
-  line-height: 44px;
-  color: #000;
-  padding: 0 1rem 0 1rem ;
-
-  @media (min-width: 768px) {
-    font-size: 28px;
-    width: 100%;
-  }
-`;
-
-export const TitleHighLight = styled.span`
-  color: #41354e;
-  margin-bottom:0;
-`;
-
-export const TextContent = styled.p`
-  width: 100%;
-  font-family: 'Monospace, Courier New';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  margin-top: 20px;
-  
-  color: #000;  
-  text-align:center;
-
-  @media (min-width: 768px) {
-    font-size: 33px;
-    margin-bottom: 16px;
-    line-height: 28px;
-  }
-`;
-
-export const BannerImage = styled.div<{ img: string }>`
-  position: absolute;
-  bottom: 11%;
-  background-image: url(${(props) => props.img});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  pointer-events: none;
-  width: 40rem;
-  height: 40rem;
-  opacity: 0.05;
-
-  @media (min-width: 768px) {
-    position: absolute;
-    left: 50%;
-    width: 51rem;
-    height: 49rem;
-    bottom: 0;
-  }
 `;
 
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width:90%;
-  padding: 1rem 0 1rem 0;
+  align-items: center;
+  width: 80%;
+  padding: 1rem;
   margin: 1rem;
   border: 2px solid #ccc;
   border-radius: 8px;
@@ -273,93 +145,86 @@ export const Content = styled.div`
   @media (min-width: 768px) {
     width: 30%;
     padding: 2rem;
-    margin: auto;
-    margin-left: 10rem;
+  }
+`;
+
+export const Title = styled.h2`
+  font-size: 32px;
+  margin-bottom: 1rem;
+  margin-left:1rem;
+`;
+
+export const TitleHighLight = styled.span`
+  color: #41354e;
+`;
+
+export const TextContent = styled.p`
+  font-size: 16px;
+  color: #000;
+  text-align: center;
+  margin-bottom: 1rem;
+`;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  background-color: #fff;
+
+  svg {
+    margin: 0.5rem;
+    color: #666;
+  }
+
+  input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: none;
   }
 `;
 
 export const ButtonGroup = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 1rem;
   width: 100%;
-  height: 100%;
-  margin-top:2.5rem;
-
-  hr {
-    background-color: #41354e;
-    width: 100%;
-    height: 1px;
-    decoration:none;
-    opacity:0.25;
-  }
-  Button{
-    width:20rem;
-    height:3rem;
-    font-size:
-  }
-  Button:hover{
-    background-color:#b2a3bc;
-  }
 `;
 
-export const LoginSocial = styled.span`
-    width: 20rem;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 20px;
-    border-radius: 35px;
-    background-color:#fff0ff ;
-    color: #41354e;
-    cursor: pointer;
+export const BannerImage = styled(SharedBannerImage)``;
 
-
-    &:hover{
-    background-color:#b2a3bc;
-    color:#fff0ff;
-  }
-
-.material-symbols-outlined {
-  margin-right:1rem;
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
-}
-`
 export const Logo = styled.img`
-  width: 3rem;
-  height: 3rem;
+  width: 4rem;
+  height: 4rem;
   cursor: pointer;
-  padding-right:1rem;
   transition: transform 0.2s ease-in-out;
-  margin-left:1rem;
 
   &:hover {
     transform: scale(1.25); 
-  }
-
-  @media (min-width: 768px) {
-    width: 4rem;
-    height: 4rem;  
-    margin:0;
   }
 `;
 
 export const HeadContainer = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
   width: 100%;
-  flex-direction: row;
+`;
+export const Divider = styled.div`
+  background-color: #41354e;
 
-  @media (max-width: 768px) {
-    
+  opacity: 0.25;
+
+  width: 100%;
+  height: 1px;
+  margin: 1rem 0;
+
+  @media (min-width: 768px) {
+    align-self: stretch; 
   }
 `;
 
@@ -727,4 +592,646 @@ export const HeadContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
+`;
+
+--home/index.tsx--
+
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import capivaraLogo from "../../assets/capivaraLogo.png";
+import { Button } from "../../components/Button";
+import {
+  Container,
+  Content,
+  TextContent,
+  Title,
+  TitleHighLight,
+  BannerImage,
+  ButtonGroup,
+  LoginSocial, 
+  Logo,
+  HeadContainer
+} from "./styles";
+
+const Home: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleClickSignIn = () => {
+    navigate("/login");
+  };
+
+  return (
+    <>
+      <Container>
+        <Content>
+          <HeadContainer>
+          <Logo src={capivaraLogo} alt="site logo" onClick={() => navigate("/")} />
+          <Title>
+            <TitleHighLight>
+              Application
+              <br />
+            </TitleHighLight>
+            BETA
+          </Title>
+          </HeadContainer>
+          <TextContent>
+            Conecte-se e compartilhe com as pessoas que fazem parte da sua vida
+          </TextContent>
+
+          <ButtonGroup> 
+          <LoginSocial>
+          <span 
+          /*Remover*/
+          className="material-symbols-outlined"
+          onClick={() => navigate("/form")}
+          >public
+            </span>
+
+              Inscreva-se com Qualquer Rede Social
+              
+          </LoginSocial>
+
+          <a>OU</a>
+
+            <Button 
+            title="CADASTRE-SE" 
+            onClick={() => navigate("/form")} 
+            />
+            <hr />
+            <Button
+              title="ENTRAR"
+              variant="secondery"
+              onClick={handleClickSignIn}
+            />
+            
+           
+          </ButtonGroup>
+        </Content>
+        <BannerImage img={capivaraLogo} />
+      </Container>
+    </>
+  );
+};
+
+export { Home };
+
+--home/styles.ts--
+
+import styled from "styled-components";
+
+export const Container = styled.main`
+  width: 100%;
+  height: 80vh;
+  margin: 0 auto;
+  font-family: 'Monospace, Courier New';
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+`;
+
+export const Title = styled.h2`
+  font-family: 'Monospace, Courier New';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  width: 320px;
+  margin-bottom: 20px;
+  line-height: 44px;
+  color: #000;
+  padding: 0 1rem 0 1rem ;
+
+  @media (min-width: 768px) {
+    font-size: 28px;
+    width: 100%;
+  }
+`;
+
+export const TitleHighLight = styled.span`
+  color: #41354e;
+  margin-bottom:0;
+`;
+
+export const TextContent = styled.p`
+  width: 100%;
+  font-family: 'Monospace, Courier New';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  margin-top: 20px;
+  
+  color: #000;  
+  text-align:center;
+
+  @media (min-width: 768px) {
+    font-size: 33px;
+    margin-bottom: 16px;
+    line-height: 28px;
+  }
+`;
+
+export const BannerImage = styled.div<{ img: string }>`
+  position: absolute;
+  bottom: 11%;
+  background-image: url(${(props) => props.img});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  width: 40rem;
+  height: 40rem;
+  opacity: 0.05;
+
+  @media (min-width: 768px) {
+    position: absolute;
+    left: 50%;
+    width: 51rem;
+    height: 49rem;
+    bottom: 0;
+  }
+`;
+
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width:90%;
+  padding: 1rem 0 1rem 0;
+  margin: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+  @media (min-width: 768px) {
+    width: 30%;
+    padding: 2rem;
+    margin: auto;
+    margin-left: 10rem;
+  }
+`;
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+  margin-top:2.5rem;
+
+  hr {
+    background-color: #41354e;
+    width: 100%;
+    height: 1px;
+    decoration:none;
+    opacity:0.25;
+  }
+  Button{
+    width:20rem;
+    height:3rem;
+    font-size:
+  }
+  Button:hover{
+    background-color:#b2a3bc;
+  }
+`;
+
+export const LoginSocial = styled.span`
+    width: 20rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 35px;
+    background-color:#fff0ff ;
+    color: #41354e;
+    cursor: pointer;
+
+
+    &:hover{
+    background-color:#b2a3bc;
+    color:#fff0ff;
+  }
+
+.material-symbols-outlined {
+  margin-right:1rem;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+`
+export const Logo = styled.img`
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  padding-right:1rem;
+  transition: transform 0.2s ease-in-out;
+  margin-left:1rem;
+
+  &:hover {
+    transform: scale(1.25); 
+  }
+
+  @media (min-width: 768px) {
+    width: 4rem;
+    height: 4rem;  
+    margin:0;
+  }
+`;
+
+export const HeadContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-direction: row;
+
+  @media (max-width: 768px) {
+    
+  }
+`;
+
+--form/index.tsx--
+
+// form/index.tsx
+
+import React from "react";
+import { MdEmail, MdLock } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { Button } from "../../components/Button";
+import {
+  Container,
+  Content,
+  Title,
+  TitleHighLight,
+  TextContent,
+  InputWrapper,
+  BannerImage,
+  Divider,
+  FormWrapper,
+  Left, 
+  Right, 
+  Logo,
+  HeadContainer
+} from "./styles";
+import capivaraLogo from "../../assets/capivaraLogo.png";
+import { FormData } from "./types";
+import { api } from "../../services/api";
+
+const schema = yup.object().shape({
+  nome: yup.string().required("O campo é obrigatório."),
+  email: yup
+    .string()
+    .email("E-mail inválido.")
+    .required("O campo é obrigatório."),
+  idade: yup
+    .number()
+    .required("O campo é obrigatório.")
+    .positive("O campo deve ser positivo.")
+    .integer("O campo deve ser um número inteiro."),
+  password: yup
+    .string()
+    .min(6, "A senha deve ter pelo menos 6 caracteres")
+    .required("O campo é obrigatório."),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), undefined], "As senhas devem coincidir")
+    .required("Confirmação de senha é obrigatória."),
+});
+
+const Form = () => {
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema) as unknown as any,
+  });
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      const response = await api.get(`/users?email=${data.email}`);
+      if (response.data.length > 0) {
+        alert("E-mail já cadastrado. Tente fazer login.");
+        return;
+      }
+      await api.post("/users", {
+        nome: data.nome,
+        email: data.email,
+        idade: data.idade,
+        password: data.password,
+      });
+      alert("Cadastro realizado com sucesso!");
+      navigate("/login");
+    } catch (error) {
+      alert("Erro ao cadastrar. Tente novamente.");
+    }
+  };
+
+  return (
+    <Container>
+      <Content>
+        <Left>
+              <HeadContainer>
+        <Logo src={capivaraLogo} alt="site logo" onClick={() => navigate("/")} />
+        <Title>
+          <TitleHighLight>
+            Application
+            <br />
+          </TitleHighLight>
+          BETA
+        </Title>
+            <Divider />
+                </HeadContainer>     
+            <TextContent>Ja tem uma conta? Faça o Login</TextContent>
+            <Button title="Login" onClick={() => navigate("/login")} />
+       </Left> 
+       <Right>
+       <FormWrapper>
+        <TextContent>Preencha os campos abaixo para criar sua conta</TextContent>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <InputWrapper>
+              <MdLock />
+              <input
+                type="text"
+                placeholder="Nome"
+                {...register("nome")}
+              />
+            </InputWrapper>
+            {errors.nome && <span>{errors.nome.message}</span>}
+            
+            <InputWrapper>
+              <MdLock />
+              <input
+                type="text"
+                placeholder="Nome de usuario"
+                {...register("userName")}
+              />
+            </InputWrapper>  
+            {errors.nome && <span>{errors.nome.message}</span>}
+            
+            <InputWrapper>
+              <MdLock />
+              <input
+                type="number"
+                placeholder="Idade"
+                {...register("idade")}
+              />
+            </InputWrapper>
+            {errors.idade && <span>{errors.idade.message}</span>}
+
+            <InputWrapper>
+              <MdLock />
+              <input
+                type="number"
+                placeholder="Numero de celular"
+                {...register("phNumber")}
+              />
+            </InputWrapper>
+            {errors.idade && <span>{errors.idade.message}</span>}
+            
+            <InputWrapper>
+              <MdEmail />
+              <input
+                type="email"
+                placeholder="E-mail"
+                {...register("email")}
+              />
+            </InputWrapper>
+            {errors.email && <span>{errors.email.message}</span>}
+
+            <InputWrapper>
+              <MdLock />
+              <input
+                type="password"
+                placeholder="Senha"
+                {...register("password")}
+              />
+            </InputWrapper>
+            {errors.password && <span>{errors.password.message}</span>}
+
+            <InputWrapper>
+              <MdLock />
+              <input
+                type="password"
+                placeholder="Confirmar Senha"
+                {...register("confirmPassword")}
+              />
+            </InputWrapper>
+            {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
+
+            <Button title="Cadastrar" type="submit" />
+          </form>
+        </FormWrapper>
+        </Right>
+      </Content>
+      <BannerImage img={capivaraLogo} />
+    </Container>
+  );
+};
+
+export { Form };
+
+--form/styles.ts--
+// form/styles.ts
+
+import styled from "styled-components";
+
+export const Container = styled.main`
+  width: 100%;
+  height: 85vh;
+  margin: 0 auto;
+  font-family: 'Monospace, Courier New';
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  Button {
+    width:100%;
+  }
+`;
+
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 1rem;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  
+  @media (min-width: 768px) {
+    padding: 1rem;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60%;
+  }
+`;
+
+
+export const Left = styled.div`
+  flex: 1;
+  order:2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom:1rem;
+  
+  @media (min-width: 768px) {
+  order:0;
+    width: 50%;
+    padding: 2rem;
+    max-width:700px;
+  }
+  Button{
+  width:80%;
+  }
+`;
+
+export const Right = styled.div`
+  flex1:1;
+  order:1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  @media (min-width: 768px) {
+    padding: 1rem;
+    width: 50%;
+    order:0;
+    
+  }
+`;
+
+export const Title = styled.h2`
+  font-family: 'Monospace, Courier New';
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+  align-self: center;
+  margin-top: 2rem;
+`;
+
+export const TitleHighLight = styled.span`
+  color: #41354e;
+`;
+
+export const TextContent = styled.p`
+  font-size: 22px;
+  margin-bottom: 1rem;
+  color: #666;
+  text-align: center;
+`;
+
+export const FormWrapper = styled.div`
+  padding: 1rem;
+
+  @media (min-width: 768px) {
+   
+  }
+`;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+  background-color: #fff;
+
+  svg {
+    margin-right: 0.5rem;
+    color: #666;
+  }
+
+  input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: none;
+  }
+`;
+
+export const ButtonGroup = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+export const BannerImage = styled.div<{ img: string }>`
+  position: absolute;
+  bottom: 11%;
+  background-image: url(${(props) => props.img});
+  background-size: cover;
+  background-position: center;
+  width: 40rem;
+  height: 40rem;
+  opacity: 0.05;
+
+  @media (min-width: 768px) {
+    left: 50%;
+    width: 51rem;
+    height: 49rem;
+  }
+`;
+
+export const Divider = styled.div`
+  height: 1px;
+  background-color: #ccc;
+  width: 100%;
+  opacity: 0.5;
+`;
+
+export const Logo = styled.img`
+  width: 3.5rem;
+  max-width: 300px;
+  height: 3.5rem;
+  cursor: pointer;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.25); 
+  }
+
+  @media (min-width: 768px) {
+   width: 90%;
+   height: 80%;
+   opacity:0.5;
+  }
+`;
+export const HeadContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+
+   @media (min-width: 768px) {
+      flex-direction:column;
+  }
 `;
