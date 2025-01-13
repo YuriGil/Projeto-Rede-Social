@@ -7,7 +7,7 @@ import { FormData } from "./types";
 import { schema } from "../../components/ValidationForm/validation";
 import { api } from "../../services/api";
 import { useNavigate } from "react-router-dom";
-import { TextContent } from "../../components/LoginPrompt/styles";
+import { TextContent } from "../../pages/form/styles";
 
 const FormSection = () => {
   const navigate = useNavigate();

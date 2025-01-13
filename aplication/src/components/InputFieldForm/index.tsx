@@ -1,6 +1,6 @@
 import React from "react";
 import { MdEmail, MdLock } from "react-icons/md";
-import { InputWrapper } from "./styles";
+import { InputWrapper } from "../../pages/form/styles";
 import { InputFieldProps } from "./types";
 
 const InputField: React.FC<InputFieldProps> = ({ type, placeholder, icon, register, name, error }) => {

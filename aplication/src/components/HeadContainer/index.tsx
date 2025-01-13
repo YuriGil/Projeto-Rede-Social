@@ -1,12 +1,13 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Logo, Title, TitleHighLight, Divider, HeadContainer } from "../../pages/form/styles";
+import { Title, TitleHighLight, Logo, HeadContainerStyled } from "../../pages/home/styles";
 import capivaraLogo from "../../assets/capivaraLogo.png";
+import { useNavigate } from "react-router-dom";
 
-const LogoHeader = () => {
+const HeadContainer: React.FC = () => {
   const navigate = useNavigate();
+
   return (
-    <HeadContainer>
+    <HeadContainerStyled>
       <Logo src={capivaraLogo} alt="site logo" onClick={() => navigate("/")} />
       <Title>
         <TitleHighLight>
@@ -15,9 +16,8 @@ const LogoHeader = () => {
         </TitleHighLight>
         BETA
       </Title>
-      <Divider />
-    </HeadContainer>
+    </HeadContainerStyled>
   );
 };
 
-export default LogoHeader;
+export { HeadContainer };

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button";
-import { TextContent } from "./styles";
+import { TextContent } from "../../pages/form/styles";
 
 const LoginPrompt = () => {
   const navigate = useNavigate();

@@ -56,6 +56,7 @@ export const BannerImage = styled.div<{ img: string }>`
   height: 50rem;
   opacity: 0.05;
   pointer-events: none;
+  z-index: -1;
 
   @media (min-width: 768px) {
     left: 50%;

@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export const Container = styled.main`
   width: 100%;
-  height: 85vh;
+  height: 88vh;
   margin: 0 auto;
   font-family: 'Monospace, Courier New';
   display: flex;
@@ -13,29 +13,33 @@ export const Container = styled.main`
   align-items: center;
   position: relative;
   overflow: hidden;
-
-  Button {
-    width:100%;
+  
+  form{
+    align-self: center;
+    width:90%;
   }
+
+  
 `;
 
 export const Content = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Alinhamento vertical padrão */
   align-items: center;
   width: 100%;
   margin: 1rem;
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.1);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  
+
   @media (min-width: 768px) {
-    padding: 1rem;
-    flex-direction: row;
+    flex-direction: row; /* Alterna para layout horizontal */
     justify-content: space-between;
     width: 60%;
+    padding: 1rem;
   }
 `;
+
 
 
 export const Left = styled.div`
@@ -44,17 +48,21 @@ export const Left = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom:1rem;
-  
-  @media (min-width: 768px) {
-  order:0;
-    width: 50%;
-    padding: 2rem;
-    max-width:700px;
-  }
+  margin-bottom:1rem;
+  width:85%;
+
   Button{
   width:80%;
+  margin:auto;
+  
   }
+
+  @media (min-width: 768px) {
+    order:0;
+    padding: 2rem;
+    width:100%;
+  }
+  
 `;
 
 export const Right = styled.div`
@@ -63,13 +71,20 @@ export const Right = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top:1rem;
+
+  Button {
+    margin:auto;
+    width:80%;
+  }
   
   @media (min-width: 768px) {
     padding: 1rem;
-    width: 50%;
     order:0;
-    
+    width:50%;
+
   }
+
 `;
 
 export const Title = styled.h2`
@@ -95,9 +110,11 @@ export const TextContent = styled.p`
 
 export const FormWrapper = styled.div`
   padding: 1rem;
+  width: 100%;
 
   @media (min-width: 768px) {
-   
+  width: 80%;
+
   }
 `;
 
@@ -140,6 +157,7 @@ export const BannerImage = styled.div<{ img: string }>`
   width: 40rem;
   height: 40rem;
   opacity: 0.05;
+  z-index:-1;
 
   @media (min-width: 768px) {
     left: 50%;
@@ -149,11 +167,20 @@ export const BannerImage = styled.div<{ img: string }>`
 `;
 
 export const Divider = styled.div`
-  height: 1px;
-  background-color: #ccc;
+  background-color: #41354e;
+  opacity: 0.25;
   width: 100%;
-  opacity: 0.5;
+  height: 1px;
+  margin: 1rem 0;
+
+  @media (min-width: 768px) {
+    height: auto; /* Ajusta o tamanho da altura */
+    width: 1px; /* Linha vertical entre Left e Right */
+    margin: 0; /* Remove margens verticais */
+    align-self: center; /* Centraliza a linha vertical */
+  }
 `;
+
 
 export const Logo = styled.img`
   width: 3.5rem;
@@ -161,7 +188,6 @@ export const Logo = styled.img`
   height: 3.5rem;
   cursor: pointer;
   margin-right: 1rem;
-  margin-bottom: 1rem;
   transition: transform 0.2s ease-in-out;
 
   &:hover {

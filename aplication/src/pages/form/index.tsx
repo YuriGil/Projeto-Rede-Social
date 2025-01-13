@@ -1,14 +1,21 @@
 import React from "react";
-import LeftSection from "../../components/LeftSectionForm";
-import RightSection from "../../components/RightSectionForm";
-import { Container, Content, BannerImage } from "./styles";
+import FormSection from "../../components/FormSection";
+import LogoHeader from "../../components/LogoHeaderForm";  
+import LoginPrompt from "../../components/LoginPrompt";
+import { Container, Content, BannerImage, Divider, Left, Right } from "./styles";
 import capivaraLogo from "../../assets/capivaraLogo.png";
 
 const Form = () => (
   <Container>
     <Content>
-      <LeftSection />
-      <RightSection />
+      <Left>  
+      <Divider/>
+      <LogoHeader />
+      <LoginPrompt />
+      </Left>
+      <Right>
+      <FormSection />
+      </Right>
     </Content>
     <BannerImage img={capivaraLogo} />
   </Container>

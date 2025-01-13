@@ -10,31 +10,13 @@ export const Container = styled.main`
   justify-content: space-between;
   align-items: center;
   position: relative;
-  overflow: hidden;
+ 
 
   @media (min-width: 768px) {
     flex-direction: row;
     justify-content: space-between;
   }
 `;
-
-export const Title = styled.h2`
-  font-family: 'Monospace, Courier New';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 32px;
-  width: 320px;
-  margin-bottom: 20px;
-  line-height: 44px;
-  color: #000;
-  padding: 0 1rem 0 1rem ;
-
-  @media (min-width: 768px) {
-    font-size: 28px;
-    width: 100%;
-  }
-`;
-
 export const TitleHighLight = styled.span`
   color: #41354e;
   margin-bottom:0;
@@ -69,6 +51,7 @@ export const BannerImage = styled.div<{ img: string }>`
   width: 40rem;
   height: 40rem;
   opacity: 0.05;
+  z-index:-1;
 
   @media (min-width: 768px) {
     position: absolute;
@@ -99,7 +82,7 @@ export const Content = styled.div`
   }
 `;
 
-export const ButtonGroup = styled.div`
+export const ButtonGroupStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -117,7 +100,7 @@ export const ButtonGroup = styled.div`
     opacity:0.25;
   }
   Button{
-    width:20rem;
+    width:75%;
     height:3rem;
     font-size:
   }
@@ -127,7 +110,7 @@ export const ButtonGroup = styled.div`
 `;
 
 export const LoginSocial = styled.span`
-    width: 20rem;
+    width: 75%;
     height: 3rem;
     display: flex;
     align-items: center;
@@ -153,33 +136,55 @@ export const LoginSocial = styled.span`
   'opsz' 24
 }
 `
-export const Logo = styled.img`
-  width: 3rem;
-  height: 3rem;
-  cursor: pointer;
-  padding-right:1rem;
-  transition: transform 0.2s ease-in-out;
-  margin-left:1rem;
-
-  &:hover {
-    transform: scale(1.25); 
-  }
-
-  @media (min-width: 768px) {
-    width: 4rem;
-    height: 4rem;  
-    margin:0;
-  }
-`;
-
-export const HeadContainer = styled.div`
+export const HeadContainerStyled = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   flex-direction: row;
-
+  margin-bottom:1rem;
   @media (max-width: 768px) {
     
   }
 `;
+
+export const Logo = styled.img`
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  margin-right: auto; /* Garante que a logo fique alinhada à esquerda */
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.25);
+  }
+
+  @media (min-width: 768px) {
+    width: 4rem;
+    height: 4rem;
+  }
+`;
+
+export const Title = styled.h2`
+  font-family: 'Monospace, Courier New';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  margin: 0;
+  text-align: left;
+  line-height: 1.2;
+  color: #000;
+
+  @media (min-width: 768px) {
+    font-size: 28px;
+  }
+`;
+
+export const Divider = styled.div`
+  background-color: #41354e;
+  opacity: 0.25;
+  width: 100%;
+  height: 1px;
+  margin: 1rem 0;
+  align-self: stretch; 
+`;
+
